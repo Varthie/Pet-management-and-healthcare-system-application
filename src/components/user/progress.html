@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Status Progress Bar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+      
+
+.progress-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.progress {
+    height: 4px;
+    background: #ddd;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.progress-bar {
+    width: 50%; /* Adjust this to reflect progress */
+    height: 100%;
+    background: #4caf50;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.status {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.step {
+    text-align: center;
+    position: relative;
+    width: 25%;
+}
+
+.step p {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ddd;
+    color: #fff;
+    line-height: 30px;
+    margin: 0 auto;
+    font-size: 16px;
+    position: relative;
+}
+
+.completed .icon {
+    background-color: #4caf50; /* Completed step background */
+}
+
+.completed p {
+    color: #4caf50;
+}
+
+.step::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: #ddd;
+    top: 15px;
+    left: -50%;
+    z-index: -1;
+}
+
+.step:first-child::before {
+    display: none;
+}
+
+.completed::before {
+    background-color: #4caf50; /* Completed line background */
+}
+
+    </style>
+</head>
+<body>
+
+
+    
+
+    <div class="status">
+        <div class="step completed">
+            <div class="icon"><i class="fas fa-shopping-cart"></i></div>
+            <p>Order Placed</p>
+        </div>
+        <div class="step completed">
+            <div class="icon"><i class="fas fa-box"></i></div>
+            <p>Processing</p>
+        </div>
+        <div class="step">
+            <div class="icon"><i class="fas fa-truck"></i></div>
+            <p>Shipped</p>
+        </div>
+        <div class="step">
+            <div class="icon"><i class="fas fa-check-circle"></i></div>
+            <p>Delivered</p>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+
+
+
+
+
+<div className="table-response">
+    <table className='table table-hover table-striped table-secondary' >
+        <thead>
+            <tr>
+            <th>id</th>
+            <th>Image</th>
+            <th>Pet Type</th>
+            <th>Breed Name</th>
+            <th>Medicine Name</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>    
+            </tr>
+        </thead>
+        <tbody>
+            {
+                values.map((data,i) => (
+                    <tr id={i}>
+                         <td>{data.id}</td> 
+                        <td>
+                            <img width={150} src={`http://localhost:5000/uploads/${data.img}`} alt="" />
+                        </td>
+                        <td>{data.ptype}</td>
+                        <td>{data.bname}</td>
+                        <td>{data.mname}</td>
+                        <td>{data.amt}</td>
+                        <td>{data.dt}</td>
+                        <td>{data.tm}</td>
+                        <td>
+                        {data.st=='Ordered'? 
+                        <span class="badge bg-danger text-white">{data.st}</span>
+                        
+                        :(
+                            data.st=='Packed'?
+                            <span class="badge bg-warning text-white">{data.st}</span>
+                            : <span class="badge bg-success text-white">{data.st}</span>
+                        )
+                        
+                        }
+                            </td>    
+                        </tr>
+                ))
+            }
+        </tbody>
+    </table>
+</div>   
